@@ -1,25 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import NavBar from './components/NavBar/NavBar';
+import { Switch, Route, Redirect } from 'react-router';
+import { HashRouter } from 'react-router-dom';
+import User from './pages/users/users';
+import Register from './pages/register/register';
+import Profile from './pages/profiles/profile';
+import { ToastContainer } from 'react-toastify';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import "react-datepicker/dist/react-datepicker.css";
+
+const CloseButton = ({ closeToast }) => <i onClick={closeToast} className="la la-close notifications-close" />
+
+class App extends React.Component {
+
+  render() {
+    return (
+      <HashRouter>
+        <ToastContainer
+          autoClose={5000}
+          hideProgressBar
+          closeButton={<CloseButton />}
+        />
+        <NavBar></NavBar>
+        <Switch>
+          <Route path="/users" exact component={User} />
+          <Route path="/register" exact component={Register} />
+          <Route path="/profiles" exact component={Profile} />
+          <Redirect from="*" to="/register" />
+        </Switch>
+      </HashRouter>
+    );
+  }
 }
 
 export default App;
